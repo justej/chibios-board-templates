@@ -46,23 +46,6 @@
  */
 #define BOARD_${doc1.board.board_id[0]}
 #define BOARD_NAME                  "${doc1.board.board_name[0]}"
-[#if doc1.board.ethernet_phy[0]??]
-
-/*
- * Ethernet PHY type.
- */
-#define BOARD_PHY_ID                ${doc1.board.ethernet_phy.identifier[0]}
-[#if doc1.board.ethernet_phy.bus_type[0]?string == "RMII"]
-#define BOARD_PHY_RMII
-[/#if]
-[/#if]
-[#if doc1.board.usb_phy[0]?? && doc1.board.usb_phy.bus_type[0]?string == "ULPI"]
-
-/*
- * The board has an ULPI USB PHY.
- */
-#define BOARD_OTG2_USES_ULPI
-[/#if]
 
 /*
  * Board oscillators-related settings.
@@ -81,6 +64,8 @@
 #define STM32_LSE_BYPASS
 
 [/#if]
+#define STM32_LSEDRV                (${doc1.board.clocks.@LSEDrive[0]?word_list[0]?number}U << 11U)
+
 #if !defined(STM32_HSECLK)
 #define STM32_HSECLK                ${doc1.board.clocks.@HSEFrequency[0]}U
 #endif
@@ -89,12 +74,6 @@
 #define STM32_HSE_BYPASS
 
 [/#if]
-/*
- * Board voltages.
- * Required for performance limits calculation.
- */
-#define STM32_VDD                   ${doc1.board.clocks.@VDD[0]}U
-
 /*
  * MCU type as defined in the ST header.
  */

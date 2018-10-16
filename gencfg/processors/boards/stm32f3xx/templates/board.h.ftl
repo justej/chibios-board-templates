@@ -1,7 +1,6 @@
 [#ftl]
 [#--
-    ChibiOS - Copyright (C) 2006,2007,2008,2009,2010,
-              2011,2012,2013,2014 Giovanni Di Sirio.
+    ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio.
 
     This file is part of ChibiOS.
 
@@ -26,8 +25,17 @@
 [@license.EmitLicenseAsText /]
 */
 
-#ifndef _BOARD_H_
-#define _BOARD_H_
+/*
+ * This file has been automatically generated using ChibiStudio board
+ * generator plugin. Do not edit manually.
+ */
+
+#ifndef BOARD_H
+#define BOARD_H
+
+/*===========================================================================*/
+/* Driver constants.                                                         */
+/*===========================================================================*/
 
 /*
  * Setup for ${doc1.board.board_name[0]} board.
@@ -39,16 +47,6 @@
 #define BOARD_${doc1.board.board_id[0]}
 #define BOARD_NAME                  "${doc1.board.board_name[0]}"
 
-[#if doc1.board.ethernet_phy[0]??]
-/*
- * Ethernet PHY type.
- */
-#define BOARD_PHY_ID                ${doc1.board.ethernet_phy.identifier[0]}
-[#if doc1.board.ethernet_phy.bus_type[0]?string == "RMII"]
-#define BOARD_PHY_RMII
-[/#if]
-
-[/#if]
 /*
  * Board oscillators-related settings.
 [#if doc1.board.clocks.@LSEFrequency[0]?number == 0]
@@ -87,15 +85,49 @@
 [#list doc1.board.ports.* as port]
   [#assign port_name = port?node_name?upper_case /]
   [#list port.* as pin]
-    [#assign pin_name = pin?node_name?upper_case /]
-    [#assign name = pin.@ID[0]?string?trim /]
-    [#if name?length == 0]
-      [#assign name = pin_name /]
-    [/#if]
+    [#assign names = pin.@ID[0]?string?word_list /]
+    [#if names?size == 0]
+      [#assign pin_name = pin?node_name?upper_case /]
+#define ${(port_name + "_" + pin_name)?right_pad(27, " ")} ${pin_index?string}U
+    [#else]
+      [#list names as name]
 #define ${(port_name + "_" + name)?right_pad(27, " ")} ${pin_index?string}U
+      [/#list]
+    [/#if]
   [/#list]
 
 [/#list]
+/*
+ * IO lines assignments.
+ */
+[#list doc1.board.ports.* as port]
+  [#assign port_name = port?node_name?upper_case /]
+  [#list port.* as pin]
+    [#assign names = pin.@ID[0]?string?word_list /]
+    [#if names?size > 0]
+      [#list names as name]
+#define LINE_${name?right_pad(22, " ")} PAL_LINE(${port_name}, ${pin_index?string}U)
+      [/#list]
+    [/#if]
+  [/#list]
+[/#list]
+
+/*===========================================================================*/
+/* Driver pre-compile time settings.                                         */
+/*===========================================================================*/
+
+/*===========================================================================*/
+/* Derived constants and error checks.                                       */
+/*===========================================================================*/
+
+/*===========================================================================*/
+/* Driver data structures and types.                                         */
+/*===========================================================================*/
+
+/*===========================================================================*/
+/* Driver macros.                                                            */
+/*===========================================================================*/
+
 /*
  * I/O ports initial setup, this configuration is established soon after reset
  * in the initialization code.
@@ -109,10 +141,10 @@
 #define PIN_ODR_HIGH(n)             (1U << (n))
 #define PIN_OTYPE_PUSHPULL(n)       (0U << (n))
 #define PIN_OTYPE_OPENDRAIN(n)      (1U << (n))
-#define PIN_OSPEED_2M(n)            (0U << ((n) * 2U))
-#define PIN_OSPEED_25M(n)           (1U << ((n) * 2U))
-#define PIN_OSPEED_50M(n)           (2U << ((n) * 2U))
-#define PIN_OSPEED_100M(n)          (3U << ((n) * 2U))
+#define PIN_OSPEED_VERYLOW(n)       (0U << ((n) * 2U))
+#define PIN_OSPEED_LOW(n)           (1U << ((n) * 2U))
+#define PIN_OSPEED_MEDIUM(n)        (2U << ((n) * 2U))
+#define PIN_OSPEED_HIGH(n)          (3U << ((n) * 2U))
 #define PIN_PUPDR_FLOATING(n)       (0U << ((n) * 2U))
 #define PIN_PUPDR_PULLUP(n)         (1U << ((n) * 2U))
 #define PIN_PUPDR_PULLDOWN(n)       (2U << ((n) * 2U))
@@ -151,10 +183,11 @@
     -- Generating MODER register value.
     --]
   [#list port.* as pin]
-    [#assign pin_name = pin?node_name?upper_case /]
-    [#assign name = pin.@ID[0]?string?trim /]
-    [#if name?length == 0]
-      [#assign name = pin_name /]
+    [#assign names = pin.@ID[0]?string?word_list /]
+    [#if names?size == 0]
+      [#assign name = pin?node_name?upper_case /]
+    [#else]
+      [#assign name = names[0] /]
     [/#if]
     [#assign mode = pin.@Mode[0] /]
     [#if mode == "Input"]
@@ -181,10 +214,11 @@ ${line + ")"}
     -- Generating OTYPER register value.
     --]
   [#list port.* as pin]
-    [#assign pin_name = pin?node_name?upper_case /]
-    [#assign name = pin.@ID[0]?string?trim /]
-    [#if name?length == 0]
-      [#assign name = pin_name /]
+    [#assign names = pin.@ID[0]?string?word_list /]
+    [#if names?size == 0]
+      [#assign name = pin?node_name?upper_case /]
+    [#else]
+      [#assign name = names[0] /]
     [/#if]
     [#assign type = pin.@Type[0] /]
     [#if type == "PushPull"]
@@ -207,20 +241,21 @@ ${line + ")"}
     -- Generating SPEEDR register value.
     --]
   [#list port.* as pin]
-    [#assign pin_name = pin?node_name?upper_case /]
-    [#assign name = pin.@ID[0]?string?trim /]
-    [#if name?length == 0]
-      [#assign name = pin_name /]
+    [#assign names = pin.@ID[0]?string?word_list /]
+    [#if names?size == 0]
+      [#assign name = pin?node_name?upper_case /]
+    [#else]
+      [#assign name = names[0] /]
     [/#if]
     [#assign speed = pin.@Speed[0] /]
     [#if speed == "Minimum"]
-      [#assign out = "PIN_OSPEED_2M(" + port_name + "_" + name + ")" /]
+      [#assign out = "PIN_OSPEED_VERYLOW(" + port_name + "_" + name + ")" /]
     [#elseif speed == "Low"]
-      [#assign out = "PIN_OSPEED_25M(" + port_name + "_" + name + ")" /]
+      [#assign out = "PIN_OSPEED_VERYLOW(" + port_name + "_" + name + ")" /]
     [#elseif speed == "High"]
-      [#assign out = "PIN_OSPEED_50M(" + port_name + "_" + name + ")" /]
+      [#assign out = "PIN_OSPEED_LOW(" + port_name + "_" + name + ")" /]
     [#else]
-      [#assign out = "PIN_OSPEED_100M(" + port_name + "_" + name + ")" /]
+      [#assign out = "PIN_OSPEED_HIGH(" + port_name + "_" + name + ")" /]
     [/#if]
     [#if pin_index == 0]
       [#assign line = "#define VAL_" + port_name + "_OSPEEDR           (" + out /]
@@ -237,10 +272,11 @@ ${line + ")"}
     -- Generating PUPDR register value.
     --]
   [#list port.* as pin]
-    [#assign pin_name = pin?node_name?upper_case /]
-    [#assign name = pin.@ID[0]?string?trim /]
-    [#if name?length == 0]
-      [#assign name = pin_name /]
+    [#assign names = pin.@ID[0]?string?word_list /]
+    [#if names?size == 0]
+      [#assign name = pin?node_name?upper_case /]
+    [#else]
+      [#assign name = names[0] /]
     [/#if]
     [#assign resistor = pin.@Resistor[0] /]
     [#if resistor == "Floating"]
@@ -265,10 +301,11 @@ ${line + ")"}
     -- Generating ODR register value.
     --]
   [#list port.* as pin]
-    [#assign pin_name = pin?node_name?upper_case /]
-    [#assign name = pin.@ID[0]?string?trim /]
-    [#if name?length == 0]
-      [#assign name = pin_name /]
+    [#assign names = pin.@ID[0]?string?word_list /]
+    [#if names?size == 0]
+      [#assign name = pin?node_name?upper_case /]
+    [#else]
+      [#assign name = names[0] /]
     [/#if]
     [#assign level = pin.@Level[0] /]
     [#if level == "Low"]
@@ -291,13 +328,14 @@ ${line + ")"}
     -- Generating AFRx registers values.
     --]
   [#list port.* as pin]
-    [#assign pin_name = pin?node_name?upper_case /]
-    [#assign name = pin.@ID[0]?string?trim /]
-    [#if name?length == 0]
-      [#assign name = pin_name /]
+    [#assign names = pin.@ID[0]?string?word_list /]
+    [#if names?size == 0]
+      [#assign name = pin?node_name?upper_case /]
+    [#else]
+      [#assign name = names[0] /]
     [/#if]
     [#assign alternate = pin.@Alternate[0]?trim /]
-    [#assign out = "PIN_AFIO_AF(" + port_name + "_" + name + ", " + alternate + ")" /]
+    [#assign out = "PIN_AFIO_AF(" + port_name + "_" + name + ", " + alternate + "U)" /]
     [#if pin_index == 0]
       [#assign line = "#define VAL_" + port_name + "_AFRL              (" + out /]
     [#elseif pin_index == 8]
@@ -313,6 +351,9 @@ ${(line + " |")?right_pad(76, " ") + "\\"}
   [/#list]
 
 [/#list]
+/*===========================================================================*/
+/* External declarations.                                                    */
+/*===========================================================================*/
 
 #if !defined(_FROM_ASM_)
 #ifdef __cplusplus
@@ -324,4 +365,4 @@ extern "C" {
 #endif
 #endif /* _FROM_ASM_ */
 
-#endif /* _BOARD_H_ */
+#endif /* BOARD_H */

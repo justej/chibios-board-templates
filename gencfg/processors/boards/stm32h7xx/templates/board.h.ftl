@@ -81,6 +81,8 @@
 #define STM32_LSE_BYPASS
 
 [/#if]
+#define STM32_LSEDRV                (${doc1.board.clocks.@LSEDrive[0]?word_list[0]?number}U << 3U)
+
 #if !defined(STM32_HSECLK)
 #define STM32_HSECLK                ${doc1.board.clocks.@HSEFrequency[0]}U
 #endif
@@ -89,12 +91,6 @@
 #define STM32_HSE_BYPASS
 
 [/#if]
-/*
- * Board voltages.
- * Required for performance limits calculation.
- */
-#define STM32_VDD                   ${doc1.board.clocks.@VDD[0]}U
-
 /*
  * MCU type as defined in the ST header.
  */
