@@ -1,0 +1,15 @@
+sourceRoot: ../gencfg/processors/boards/stm32f1xx/templates
+outputRoot: ./build_results/stm32f103cb
+dataRoot: .
+
+freemarkerLinks: {
+    lib: ../gencfg/processors/boards/libs
+}
+
+data : {
+  doc1:xml (
+    stm32f103cb.chcfg
+    {
+    }
+  )
+}
