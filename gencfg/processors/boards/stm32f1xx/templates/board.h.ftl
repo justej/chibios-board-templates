@@ -243,7 +243,7 @@
     [#else]
       [#assign line = "                                     " + out_mode + " | " + out_conf /]
     [/#if]
-    [#if pin_index < 7 || (pin_index > 8 && pin_index < 15) ]
+    [#if pin_index < 7 || (pin_index > 7 && pin_index < 15) ]
 ${(line + " |")?right_pad(76, " ") + "\\"}
     [#else]
 ${line + ")"}
