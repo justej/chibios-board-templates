@@ -149,17 +149,17 @@
  * in the initialization code.
  * Please refer to the STM32 Reference Manual for details.
  */
-#define PIN_MODE_INPUT(n)               (0U << ((n) * 4U))
-#define PIN_MODE_OUTPUT_MINIMUM(n)      (2U << ((n) * 4U))
-#define PIN_MODE_OUTPUT_MEDIUM(n)       (1U << ((n) * 4U))
-#define PIN_MODE_OUTPUT_MAXIMUM(n)      (3U << ((n) * 4U))
-#define PIN_CONF_OUTPUT_PUSHPULL(n)     (0U << ((n) * 4U))
-#define PIN_CONF_OUTPUT_OPENDRAIN(n)    (4U << ((n) * 4U))
-#define PIN_CONF_ALTERNATE_PUSHPULL(n)  (8U << ((n) * 4U))
-#define PIN_CONF_ALTERNATE_OPENDRAIN(n) (12U << ((n) * 4U))
-#define PIN_CONF_ANALOG_INPUT(n)        (0U << ((n) * 4U))
-#define PIN_CONF_FLOATING_INPUT(n)      (4U << ((n) * 4U))
-#define PIN_CONF_PULLED_INPUT(n)        (8U << ((n) * 4U))
+#define PIN_MODE_INPUT(n)               (0U << (((n) % 8) * 4U))
+#define PIN_MODE_OUTPUT_MINIMUM(n)      (2U << (((n) % 8) * 4U))
+#define PIN_MODE_OUTPUT_MEDIUM(n)       (1U << (((n) % 8) * 4U))
+#define PIN_MODE_OUTPUT_MAXIMUM(n)      (3U << (((n) % 8) * 4U))
+#define PIN_CONF_OUTPUT_PUSHPULL(n)     (0U << (((n) % 8) * 4U))
+#define PIN_CONF_OUTPUT_OPENDRAIN(n)    (4U << (((n) % 8) * 4U))
+#define PIN_CONF_ALTERNATE_PUSHPULL(n)  (8U << (((n) % 8) * 4U))
+#define PIN_CONF_ALTERNATE_OPENDRAIN(n) (12U << (((n) % 8) * 4U))
+#define PIN_CONF_ANALOG_INPUT(n)        (0U << (((n) % 8) * 4U))
+#define PIN_CONF_FLOATING_INPUT(n)      (4U << (((n) % 8) * 4U))
+#define PIN_CONF_PULLED_INPUT(n)        (8U << (((n) % 8) * 4U))
 #define PIN_ODR_LOW(n)                  (0U << (n))
 #define PIN_ODR_HIGH(n)                 (1U << (n))
 

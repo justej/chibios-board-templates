@@ -34,9 +34,6 @@
 #include "${header[0]?string?trim}"
 [/#list]
 #include "hal.h"
-[#if doc1.board.configuration_settings.hal_version[0]?trim != "4.0.x"]
-#include "stm32_gpio.h"
-[/#if]
 
 /*===========================================================================*/
 /* Driver local definitions.                                                 */
@@ -50,62 +47,6 @@
 /* Driver local variables and types.                                         */
 /*===========================================================================*/
 
-[#if doc1.board.configuration_settings.hal_version[0]?trim != "4.0.x"]
-/**
- * @brief   Type of STM32 GPIO port setup.
- */
-typedef struct {
-  uint32_t              crl;
-  uint32_t              crh;
-  uint32_t              odr;
-} gpio_setup_t;
-
-/**
- * @brief   Type of STM32 GPIO initialization data.
- */
-typedef struct {
-#if STM32_HAS_GPIOA || defined(__DOXYGEN__)
-  gpio_setup_t          PAData;
-#endif
-#if STM32_HAS_GPIOB || defined(__DOXYGEN__)
-  gpio_setup_t          PBData;
-#endif
-#if STM32_HAS_GPIOC || defined(__DOXYGEN__)
-  gpio_setup_t          PCData;
-#endif
-#if STM32_HAS_GPIOD || defined(__DOXYGEN__)
-  gpio_setup_t          PDData;
-#endif
-#if STM32_HAS_GPIOE || defined(__DOXYGEN__)
-  gpio_setup_t          PEData;
-#endif
-#if STM32_HAS_GPIOF || defined(__DOXYGEN__)
-  gpio_setup_t          PFData;
-#endif
-#if STM32_HAS_GPIOG || defined(__DOXYGEN__)
-  gpio_setup_t          PGData;
-#endif
-#if STM32_HAS_GPIOH || defined(__DOXYGEN__)
-  gpio_setup_t          PHData;
-#endif
-#if STM32_HAS_GPIOI || defined(__DOXYGEN__)
-  gpio_setup_t          PIData;
-#endif
-#if STM32_HAS_GPIOJ || defined(__DOXYGEN__)
-  gpio_setup_t          PJData;
-#endif
-#if STM32_HAS_GPIOK || defined(__DOXYGEN__)
-  gpio_setup_t          PKData;
-#endif
-} gpio_config_t;
-
-[/#if]
-[#if doc1.board.configuration_settings.hal_version[0]?trim != "4.0.x"]
-/**
- * @brief   STM32 GPIO static initialization data.
- */
-static const gpio_config_t gpio_default_config = {
-[#else]
 #if HAL_USE_PAL || defined(__DOXYGEN__)
 /**
  * @brief   PAL setup.
@@ -113,89 +54,39 @@ static const gpio_config_t gpio_default_config = {
  *          This variable is used by the HAL when initializing the PAL driver.
  */
 const PALConfig pal_default_config = {
-[/#if]
-#if STM32_HAS_GPIOA
-  {VAL_GPIOA_CRL, VAL_GPIOA_CRH, VAL_GPIOA_ODR},
-#endif
-#if STM32_HAS_GPIOB
-  {VAL_GPIOB_CRL, VAL_GPIOB_CRH, VAL_GPIOB_ODR},
-#endif
-#if STM32_HAS_GPIOC
-  {VAL_GPIOC_CRL, VAL_GPIOC_CRH, VAL_GPIOC_ODR},
-#endif
-#if STM32_HAS_GPIOD
-  {VAL_GPIOD_CRL, VAL_GPIOD_CRH, VAL_GPIOD_ODR},
-#endif
+  {VAL_GPIOA_ODR, VAL_GPIOA_CRL, VAL_GPIOA_CRH},
+  {VAL_GPIOB_ODR, VAL_GPIOB_CRL, VAL_GPIOB_CRH},
+  {VAL_GPIOC_ODR, VAL_GPIOC_CRL, VAL_GPIOC_CRH},
+  {VAL_GPIOD_ODR, VAL_GPIOD_CRL, VAL_GPIOD_CRH},
 #if STM32_HAS_GPIOE
-  {VAL_GPIOE_CRL, VAL_GPIOE_CRH, VAL_GPIOE_ODR},
+  {VAL_GPIOE_ODR, VAL_GPIOE_CRL, VAL_GPIOE_CRH},
 #endif
 #if STM32_HAS_GPIOF
-  {VAL_GPIOF_CRL, VAL_GPIOF_CRH, VAL_GPIOF_ODR},
+  {VAL_GPIOF_ODR, VAL_GPIOF_CRL, VAL_GPIOF_CRH},
 #endif
 #if STM32_HAS_GPIOG
-  {VAL_GPIOG_CRL, VAL_GPIOG_CRH, VAL_GPIOG_ODR},
+  {VAL_GPIOG_ODR, VAL_GPIOG_CRL, VAL_GPIOG_CRH},
 #endif
 #if STM32_HAS_GPIOH
-  {VAL_GPIOH_CRL, VAL_GPIOH_CRH, VAL_GPIOH_ODR},
+  {VAL_GPIOH_ODR, VAL_GPIOH_CRL, VAL_GPIOH_CRH},
 #endif
 #if STM32_HAS_GPIOI
-  {VAL_GPIOI_CRL, VAL_GPIOI_CRH, VAL_GPIOI_ODR},
+  {VAL_GPIOI_ODR, VAL_GPIOI_CRL, VAL_GPIOI_CRH},
 #endif
 #if STM32_HAS_GPIOJ
-  {VAL_GPIOJ_CRL, VAL_GPIOJ_CRH, VAL_GPIOJ_ODR},
+  {VAL_GPIOJ_ODR, VAL_GPIOJ_CRL, VAL_GPIOJ_CRH},
 #endif
 #if STM32_HAS_GPIOK
-  {VAL_GPIOK_CRL, VAL_GPIOK_CRH, VAL_GPIOK_ODR}
+  {VAL_GPIOK_ODR, VAL_GPIOK_CRL, VAL_GPIOK_CRH}
 #endif
 };
-[#if doc1.board.configuration_settings.hal_version[0]?trim == "4.0.x"]
+
 #endif
-[/#if]
 
 /*===========================================================================*/
 /* Driver local functions.                                                   */
 /*===========================================================================*/
 
-[#if doc1.board.configuration_settings.hal_version[0]?trim != "4.0.x"]
-static void gpio_init(stm32_gpio_t *gpiop, const gpio_setup_t *config) {
-
-  gpiop->CRL = config->crl;
-  gpiop->CRH = config->crh;
-  gpiop->ODR = config->odr;
-}
-
-static void stm32_gpio_init(void) {
-
-  /* Enabling GPIO-related clocks, the mask comes from the
-     registry header file.*/
-  rccResetAHB1(STM32_GPIO_EN_MASK);
-  rccEnableAHB1(STM32_GPIO_EN_MASK, true);
-
-  /* Initializing all the defined GPIO ports.*/
-#if STM32_HAS_GPIOA
-  gpio_init(GPIOA, &gpio_default_config.PAData);
-#endif
-#if STM32_HAS_GPIOB
-  gpio_init(GPIOB, &gpio_default_config.PBData);
-#endif
-#if STM32_HAS_GPIOC
-  gpio_init(GPIOC, &gpio_default_config.PCData);
-#endif
-#if STM32_HAS_GPIOD
-  gpio_init(GPIOD, &gpio_default_config.PDData);
-#endif
-#if STM32_HAS_GPIOE
-  gpio_init(GPIOE, &gpio_default_config.PEData);
-#endif
-#if STM32_HAS_GPIOF
-  gpio_init(GPIOF, &gpio_default_config.PFData);
-#endif
-#if STM32_HAS_GPIOG
-  gpio_init(GPIOG, &gpio_default_config.PGData);
-#endif
-}
-
-[/#if]
 /*===========================================================================*/
 /* Driver interrupt handlers.                                                */
 /*===========================================================================*/
@@ -215,9 +106,6 @@ static void stm32_gpio_init(void) {
  */
 void __early_init(void) {
 
-[#if doc1.board.configuration_settings.hal_version[0]?trim != "4.0.x"]
-  stm32_gpio_init();
-[/#if]
   stm32_clock_init();
 [#if doc1.board.board_functions.__early_init[0]??]
   ${doc1.board.board_functions.__early_init[0]}
