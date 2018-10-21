@@ -1,1 +1,0 @@
-fmpp -C stm32f103cb.fmpp

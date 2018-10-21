@@ -1,0 +1,15 @@
+sourceRoot: ../../gencfg/processors/boards/stm32f1xx/templates
+outputRoot: ..
+dataRoot: .
+
+freemarkerLinks: {
+    lib: ../../gencfg/processors/boards/libs
+}
+
+data : {
+  doc1:xml (
+    board.chcfg
+    {
+    }
+  )
+}

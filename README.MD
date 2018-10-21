@@ -29,4 +29,4 @@ Currently the following families of STM32 microcontrollers are supported:
 Examples
 --------
 
-Assuming you have [Freemarker template engine](https://freemarker.apache.org/freemarkerdownload.html) on your path, simply run example/stm32f103cb.bat, that's it! You'll get a new directory created which contains board.c, board.h and board.mk for STM32F103CB microcontroller.
+Assuming you have [Freemarker template engine](https://freemarker.apache.org/freemarkerdownload.html) on your path, simply run example/cfg/board.bat, that's it! You'll get board.c, board.h and board.mk files for STM32F103CB microcontroller. Customize board.cfg and generate board.* files for your project!

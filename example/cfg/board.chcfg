@@ -2,14 +2,14 @@
 <!-- STM32F1xx board Template -->
 <board
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="file://localhost/C:/TheGarage/Projects/ChibiOS/config_wizard/resources/schemas/boards/stm32f1xx_board.xsd">
+    xsi:noNamespaceSchemaLocation="../../gencfg/schema/boards/stm32f1xx_board.xsd">
     <configuration_settings>
          <templates_path>resources/gencfg/processors/boards/stm32f1xx/templates</templates_path>
          <output_path>..</output_path>
          <hal_version>5.0.x</hal_version>
     </configuration_settings>
-    <board_name>Custom board STM32F103CBT6</board_name>
-    <board_id>STM32F103CB_dev_board</board_id>
+    <board_name>Custom board STM32F103CB</board_name>
+    <board_id>CUSTOM_BOARD_STM32F103CB</board_id>
     <board_functions></board_functions>
 
     <subtype>STM32F103xB</subtype>
@@ -348,5 +348,87 @@
                 Mode="PulledInput"
                 Level="High" />
         </GPIOD>
+        <GPIOE>
+            <pin0
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="DoNotCare" />
+            <pin1
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="DoNotCare" />
+            <pin2
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin3
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin4
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin5
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin6
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin7
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin8
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin9
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin10
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin11
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin12
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin13
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin14
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+            <pin15
+                ID=""
+                Speed="Minimum"
+                Mode="PulledInput"
+                Level="High" />
+        </GPIOE>
     </ports>
 </board>
